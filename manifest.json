@@ -16,8 +16,8 @@
     "content_scripts": [
         {
             "matches": ["https://github.com/*/projects/*"],
-            "css": ["colorbox.css"],
-            "js": ["jquery-3.3.1.min.js", "jquery.colorbox-min.js", "content_script.js"],
+            "css": ["lib/css/colorbox.css"],
+            "js": ["lib/js/jquery-3.3.1.min.js", "lib/js/jquery.colorbox-min.js", "content_script.js"],
             "run_at": "document_end"
         }
     ]
