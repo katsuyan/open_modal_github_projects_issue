@@ -5,7 +5,7 @@
     "description": "open modal github projects issue",
 
     "browser_action": {
-        "default_title": "open-modal",
+        "default_title": "open modal github projects issue",
         "default_popup": "index.html"
     },
 
