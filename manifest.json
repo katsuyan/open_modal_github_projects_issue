@@ -1,8 +1,8 @@
 {
-    "name": "open modal",
+    "name": "open modal github projects issue",
     "manifest_version": 2,
     "version": "1.0",
-    "description": "open modal",
+    "description": "open modal github projects issue",
 
     "browser_action": {
         "default_title": "open-modal",
@@ -15,7 +15,7 @@
 
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
+            "matches": ["https://github.com/*"],
             "css": ["colorbox.css"],
             "js": ["jquery-3.3.1.min.js", "jquery.colorbox-min.js", "content_script.js"],
             "run_at": "document_end"
