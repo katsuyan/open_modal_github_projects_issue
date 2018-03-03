@@ -1,0 +1,24 @@
+{
+    "name": "open modal",
+    "manifest_version": 2,
+    "version": "1.0",
+    "description": "open modal",
+
+    "browser_action": {
+        "default_title": "open-modal",
+        "default_popup": "index.html"
+    },
+
+    "permissions": [
+        "contextMenus"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "css": ["colorbox.css"],
+            "js": ["jquery-3.3.1.min.js", "jquery.colorbox-min.js", "content_script.js"],
+            "run_at": "document_end"
+        }
+    ]
+}
