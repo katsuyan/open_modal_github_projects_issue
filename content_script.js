@@ -2,7 +2,7 @@ $(document).on("click", "a", function(e) {
   var url = e.target.href;
   if ( url.indexOf('/issues/') != -1 || url.indexOf('/pull/') != -1 ) {
     $.colorbox({
-      href:url,
+      href:'https://github.com/issues',
       speed:0
     });
     $.colorbox({
