@@ -13,12 +13,20 @@ $(document).on("click", ".issue-card a", function(e) {
       href:url,
       speed:200,
       onComplete: function() {
+        var issue_title = $("#cboxLoadedContent .js-issue-title").text();
         $("#cboxLoadedContent .Header").remove();
-        $("#cboxLoadedContent .pagehead").replaceWith('<a href="'+url+'" class="btn btn-light btn-sm">open new tab</a>');
+        $("#cboxLoadedContent .pagehead").replaceWith('<div>　</div>');
         $("#cboxLoadedContent a[href$='/issues/new']").remove();
-        $('#cboxLoadedContent a').attr('target', '_blank');
+        $("#cboxLoadedContent .js-issue-title").replaceWith('<a href="'+url+'">'+issue_title+'</a>');
+        $("#cboxLoadedContent .issues-listing").removeAttr("data-pjax");
       }
     });
     return false;
   }
+});
+
+$(document).on("click", "#cboxLoadedContent a", function(e) {
+  var url = e.target.href;
+  window.open(url);
+  return false;
 });
