@@ -1,6 +1,7 @@
 $(document).on("click", ".issue-card a", function(e) {
   var url = e.target.href;
   if ( url.indexOf('/issues/') != -1 || url.indexOf('/pull/') != -1 ) {
+    dispLoading("少々お待ちを〜");
 
     $.ajax({
       type: "GET",
@@ -12,8 +13,8 @@ $(document).on("click", ".issue-card a", function(e) {
         width:"1140",
         height:"85%",
         html:html,
-        speed:0,
         onComplete: function() {
+          removeLoading()
           var issue_title = $("#cboxLoadedContent .js-issue-title").text();
           $("#cboxLoadedContent .Header").remove();
           $("#cboxLoadedContent .pagehead").replaceWith('<div>　</div>');
@@ -33,3 +34,12 @@ $(document).on("click", "#cboxLoadedContent a", function(e) {
   window.open(url);
   return false;
 });
+
+function dispLoading(msg){
+  var dispMsg = "<div class='loadingMsg'>" + msg + "</div>";
+  $("body").append("<div id='loading'><h3>" + dispMsg + "</h3></div>");
+}
+
+function removeLoading(){
+  $("#loading").remove();
+}
