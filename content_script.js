@@ -1,45 +1,66 @@
-$(document).on("click", ".issue-card a", function(e) {
-  var url = e.target.href;
-  if ( url.indexOf('/issues/') != -1 || url.indexOf('/pull/') != -1 ) {
-    dispLoading("少々お待ちを〜");
+var removeProjectSidebar = function() {
+  $(".js-project-columns").css({ "cssText": "padding-right: 0 !important" });
+  $(".js-project-card-details-pane").css({ "cssText": "width: 0 !important" });
+};
 
-    $.ajax({
-      type: "GET",
-      url: url,
+var showLoading = function() {
+  $("body").append("<div id='loading' />");
+};
 
-    }).done(function(msg) {
-      var html = msg.replace(/<script.*?<\/script>/g, "");
-      $.colorbox({
-        width:"1140",
-        height:"85%",
-        html:html,
-        onComplete: function() {
-          removeLoading()
-          var issue_title = $("#cboxLoadedContent .js-issue-title").text();
-          $("#cboxLoadedContent .Header").remove();
-          $("#cboxLoadedContent .pagehead").replaceWith('<div>　</div>');
-          $("#cboxLoadedContent a[href$='/issues/new']").remove();
-          $("#cboxLoadedContent .js-issue-title").replaceWith('<a href="'+url+'">'+issue_title+'</a>');
-          $("#cboxLoadedContent .issues-listing").removeAttr("data-pjax");
-          $("#cboxLoadedContent a[data-pjax]").removeAttr("data-pjax");
-        }
-      });
-    });
-    return false;
-  }
-});
-
-$(document).on("click", "#cboxLoadedContent a", function(e) {
-  var url = e.target.href;
-  window.open(url);
-  return false;
-});
-
-function dispLoading(msg){
-  var dispMsg = "<div class='loadingMsg'>" + msg + "</div>";
-  $("body").append("<div id='loading'><h3>" + dispMsg + "</h3></div>");
-}
-
-function removeLoading(){
+var hideLoading = function() {
   $("#loading").remove();
-}
+};
+
+var hookOnClickIssueCard = function() {
+  $(document).on("click", ".issue-card a", function (e) {
+    var url = e.target.href;
+
+    if (url.indexOf("/issues/") != -1 || url.indexOf("/pull/") != -1) {
+      showLoading();
+      openIssueInModal(url);
+
+      return false;
+    }
+  });
+};
+
+var openIssueInModal = function(url) {
+  $.ajax({
+    type: "GET",
+    url: url,
+  }).done(function (msg) {
+    var html = msg.replace(/<script.*?<\/script>/g, "");
+    html = $(html).find(".new-discussion-timeline");
+    html = $(html).prepend("<div style='margin-top: 24px'>");
+
+    $.colorbox({
+      width: "85%",
+      height: "95%",
+      transition: "none",
+      html: html,
+      onComplete: function () {
+        hideLoading();
+
+        // add Title link
+        var issueTitle = $("#cboxLoadedContent .js-issue-title").first().text();
+        $("#cboxLoadedContent .js-issue-title").replaceWith("<a href=\""+url+"\">"+issueTitle+"</a>");
+      }
+    });
+  });
+};
+
+var openModalLinkToOtherWindow = function() {
+  $(document).on("click", "#cboxLoadedContent a", function (e) {
+    var url = e.target.href;
+    window.open(url);
+    return false;
+  });
+};
+
+var initialize = function() {
+  removeProjectSidebar();
+  hookOnClickIssueCard();
+  openModalLinkToOtherWindow();
+};
+
+initialize();
