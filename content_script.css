@@ -5,8 +5,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #fff;
-  opacity: 0.8;
+  background-color: #000;
+  opacity: 0.6;
+  z-index: 2;
 }
 
 #loading .loadingMsg {
